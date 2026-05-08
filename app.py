@@ -22,7 +22,6 @@ from modules.visualization import (
 
 st.set_page_config(
     page_title="Estabilidad de Taludes — EDA Dashboard",
-    page_icon="⛰️",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -42,8 +41,7 @@ hr { border: 0; border-top: 1px solid #e0e0e0; margin: 8px 0; }
 # ─── Panel lateral de controles ───────────────────────────────────────────────
 
 with st.sidebar:
-    st.markdown("## ⛰️ Parámetros del Talud")
-    st.markdown("*Dataset Zhou et al. (2025) — 72,000 muestras*")
+    st.markdown("## Parámetros del Talud")
     st.markdown("---")
 
     # Propiedades del suelo
@@ -88,7 +86,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        "⚠️ **λ₁ y λ₂ excluidos**: son data leakage "
+        "**λ₁ y λ₂ excluidos**: son data leakage "
         "(`FS = (λ₁+λ₂)/2`, error ≈ 10⁻⁶). "
         "No se usan en ningún cálculo.",
         help="Hallazgo crítico del EDA: r(λ₁, FS)=0.992, r(λ₂, FS)=0.992."
@@ -106,25 +104,22 @@ interpretation = generate_interpretation(params, derived, fs)
 
 # ─── Encabezado ───────────────────────────────────────────────────────────────
 
-st.markdown(
-    "## Dashboard — Análisis Exploratorio de Estabilidad de Taludes\n"
-    "*EDA basado en Zhou et al. (2025) · 72,000 muestras sintéticas · UNSA 2026-A*"
-)
+st.markdown("## Dashboard — Análisis Exploratorio de Estabilidad de Taludes")
 
 # Mostrar advertencias antes de los tabs
 for wtype, msg in warnings:
     if wtype == "error":
-        st.error(f"🔴 {msg}")
+        st.error(msg)
     elif wtype == "warning":
-        st.warning(f"⚠️ {msg}")
+        st.warning(msg)
 
 # ─── Tabs principales ─────────────────────────────────────────────────────────
 
 tab1, tab2, tab3, tab4 = st.tabs([
-    "📐 Escenario Actual",
-    "📊 Hipótesis EDA",
-    "🎯 Sensibilidad",
-    "🔄 Comparación A/B",
+    "Escenario Actual",
+    "Hipótesis EDA",
+    "Sensibilidad",
+    "Comparación A/B",
 ])
 
 
@@ -220,7 +215,7 @@ with tab2:
             "r²(w/y₃) = 0.93% > r²(w) = 0.28%; w×H empeora (0.19%)",
             "r²(c/H) = 0.647 vs r²(c) = 0.287 — más del doble",
         ],
-        "Veredicto": ["✅ Confirmada"] * 5,
+        "Veredicto": ["Confirmada"] * 5,
     }
     st.table(hyp_data)
 
@@ -291,7 +286,7 @@ with tab4:
 
     with col_a:
         st.markdown("### Escenario A")
-        if st.button("💾 Guardar configuración actual como A", key="save_a"):
+        if st.button("Guardar configuración actual como A", key="save_a"):
             st.session_state["scenario_a"] = {
                 **params,
                 "derived": dict(derived),
@@ -315,7 +310,7 @@ with tab4:
 
     with col_b:
         st.markdown("### Escenario B")
-        if st.button("💾 Guardar configuración actual como B", key="save_b"):
+        if st.button("Guardar configuración actual como B", key="save_b"):
             st.session_state["scenario_b"] = {
                 **params,
                 "derived": dict(derived),
@@ -368,7 +363,7 @@ with tab4:
 
     # Limpiar escenarios
     if sa or sb:
-        if st.button("🗑️ Limpiar escenarios guardados"):
+        if st.button("Limpiar escenarios guardados"):
             st.session_state.pop("scenario_a", None)
             st.session_state.pop("scenario_b", None)
             st.rerun()
